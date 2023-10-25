@@ -1,0 +1,4 @@
+.mainContent__container {
+	max-width: calc(100vw - 320px);
+	padding: 20px;
+}

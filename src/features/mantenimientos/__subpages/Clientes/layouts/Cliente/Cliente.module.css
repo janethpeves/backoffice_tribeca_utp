@@ -1,0 +1,16 @@
+.client__container {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    gap: 20px;
+
+}
+.client__box{
+	display: grid;
+	gap: 20px;
+}
+.switch__container{
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	gap: 20px;
+}
+
