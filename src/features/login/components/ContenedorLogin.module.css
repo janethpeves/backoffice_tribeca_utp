@@ -96,15 +96,15 @@
 	justify-content: center;
 	font-size: 15px;
 	color: white;
-	background: #EB1923;
+	background: #3c5b3a;
 	border: none;
 	width: 80%;
 	padding: 15px;
-	border: 1px solid #EB1923;
+	border: 1px solid #3c5b3a;
 	border-radius: 4px;
 }
 .button:hover {
-	background: #EB1923;
+	background: #458840;
 }
 
 .enlace {
@@ -116,7 +116,7 @@
 .enlace a {
 	font-size: 12px;
 	font-weight: bold;
-	color: #EB1923;
+	color: #3c5b3a;
 }
 
 /*-----------Codigo de Usario*/

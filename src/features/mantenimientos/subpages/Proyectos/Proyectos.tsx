@@ -6,23 +6,23 @@ import { AddModal } from "./AddModal/AddModal";
 import { DataTable } from "@/components/DataTable/DataTable";
 import { MainContentStructure } from "@/components/MainContentStructure/MainContentStructure";
 
-export const Sedes = () => {
-	const addModal = useModal();
+export const Proyectos = () => {
+    const addModal = useModal();
 
 	return (
 		<>
-			<MainContentStructure titleText="Mantenimiento de sedes">
+			<MainContentStructure titleText="Mantenimiento de proyectos">
 				<DataTable
 					columns={columns}
 					data={""}
-					textAddButton="AGREGAR SEDE"
+					textAddButton="AGREGAR PROYECTO"
 					onAddModal={addModal.onVisibleModal}
 				/>
 			</MainContentStructure>
 
 			{/* Add Modal */}
 			<PrimeModal
-				header="Agregar sede"
+				header="Agregar proyecto"
 				modalStatus={addModal.modalStatus}
 				onHideModal={addModal.onHideModal}
 			>
@@ -41,3 +41,4 @@ const columns = [
 	{ nombre: "Distrito", campo: "district" },
 	{ nombre: "Dirección", campo: "address" },
 ];
+

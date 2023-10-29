@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import logoImg from "../assets/Logo.png";
+import logoImg from "@/assets/TRIBECA.jpg";
 import user0Icon from "../assets/User0.svg";
 import user1Icon from "../assets/User1.svg";
 import hideIcon from "../assets/Hide.svg";
@@ -88,9 +88,9 @@ export let ContenedorLogin = () => {
 				/>
 			</label>
 
-			{/* <div className={style.enlace}>
+			<div className={style.enlace}>
 				<a href="/">Olvido su contraseña?</a>
-			</div> */}
+			</div>
 
 			<div className={style.button} onClick={handleLogin}>
 				Entrar <img className={style.iconLogin} src={loginIcon} alt="Icono de login" />
