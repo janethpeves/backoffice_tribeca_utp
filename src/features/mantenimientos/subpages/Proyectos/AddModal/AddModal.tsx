@@ -30,14 +30,14 @@ export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAd
 	return (
 		<div className={style.column__container}>
 			<TextBoxField
-				textLabel="Nombre de la sede"
+				textLabel="Nombre del proyecto"
 				value={newData.name || ""}
 				name="name"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 
 			<TextBoxField
-				textLabel="Teléfono"
+				textLabel="Subtítulo"
 				value={newData.phone || ""}
 				name="phone"
 				type="number"
@@ -45,34 +45,39 @@ export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAd
 			/>
 
 			<SelectField
-				textLabel="Departamento"
+				textLabel="Estado"
 				value={newData.department || ""}
 				name="department"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 				placeholder="Seleccione un departamento"
 				options={[]}
 			/>
-			<SelectField
-				textLabel="Provincia"
-				value={newData.province || ""}
-				name="province"
+			<TextBoxField
+				textLabel="Precio"
+				value={newData.phone || ""}
+				name="phone"
+				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
-				placeholder="Seleccione una provincia"
-				options={[]}
 			/>
-			<SelectField
-				textLabel="Distrito"
-				value={newData.district || ""}
-				name="district"
+			<TextBoxField
+				textLabel="Cantidad dormitorio"
+				value={newData.phone || ""}
+				name="phone"
+				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
-				placeholder="Seleccione un distrito"
-				options={[]}
 			/>
 
 			<TextBoxField
-				textLabel="Dirección"
+				textLabel="Cantidad de baños"
 				value={newData.address || ""}
 				name="address"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+			<TextBoxField
+				textLabel="Área"
+				value={newData.phone || ""}
+				name="phone"
+				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 

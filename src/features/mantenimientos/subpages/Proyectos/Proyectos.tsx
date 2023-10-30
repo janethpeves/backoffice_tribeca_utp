@@ -33,12 +33,13 @@ export const Proyectos = () => {
 };
 
 const columns = [
-	// { nombre: "ID", campo: "id" },
+	{ nombre: "ID", campo: "id" },
 	{ nombre: "Nombre", campo: "name" },
-	{ nombre: "Teléfono", campo: "phone" },
-	{ nombre: "Departamento", campo: "department" },
-	{ nombre: "Provincia", campo: "province" },
-	{ nombre: "Distrito", campo: "district" },
-	{ nombre: "Dirección", campo: "address" },
+	{ nombre: "Subtítulo", campo: "phone" },
+	{ nombre: "Estado", campo: "department" },
+	{ nombre: "Precio", campo: "province" },
+	{ nombre: "Cantidad dormitorio", campo: "district" },
+	{ nombre: "Cantidad de baños", campo: "address" },
+    { nombre: "Área", campo: "address" },
 ];
 
