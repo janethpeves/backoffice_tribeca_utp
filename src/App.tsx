@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { AppRoutes } from "./routes/AppRoutes";
 
 import { addLocale, locale } from "primereact/api";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { refreshToken, isLoading } from "@/store/slices/auth";
+import { clearToast } from "./store/slices/toast";
+import { Toast } from "primereact/toast";
 
 export const App = () => {
 	addLocale("es", {
@@ -56,8 +58,25 @@ export const App = () => {
 			dispatch(isLoading());
 		}
 	}, []);
+
+	// Toast
+	const toast = useRef<Toast>(null);
+	const { toastConfig } = useAppSelector((state) => state.toast);
+	useEffect(() => {
+		if (toastConfig.severity) {
+			toast.current?.show({
+				severity: toastConfig.severity,
+				summary: toastConfig.summary,
+				detail: toastConfig.detail,
+			});
+
+			dispatch(clearToast());
+		}
+	}, [toastConfig]);
+
 	return (
 		<>
+			<Toast ref={toast} />
 			<AppRoutes />
 		</>
 	);
