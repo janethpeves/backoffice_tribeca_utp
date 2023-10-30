@@ -1,22 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModal } from "@/hooks/useModal";
 
 import { PrimeModal } from "@/primeComponents/PrimeModal/PrimeModal";
 import { AddModal } from "./AddModal/AddModal";
 import { DataTable } from "@/components/DataTable/DataTable";
 import { MainContentStructure } from "@/components/MainContentStructure/MainContentStructure";
+import { useGetFetch } from "@/hooks/useGetFetch";
+import { usePostFetch } from "@/hooks/usePostFetch";
+import { useDeleteFetch } from "@/hooks/useDeleteFetch";
+import { useUpdateFetch } from "@/hooks/useUpdateFetch";
 
 export const Proyectos = () => {
-    const addModal = useModal();
+	const addModal = useModal();
+	const updateModal = useModal();
+
+	const [currentUpdateData, setCurrentUpdateData] = useState<any>(null);
+
+	const { data, reloadFetchData } = useGetFetch<any>("/proyectos");
+	const { postFetchData } = usePostFetch("/proyectos", "Proyecto", reloadFetchData, addModal);
+	const { deleteFetchData } = useDeleteFetch("/proyectos", "Proyecto", reloadFetchData);
+	const { updateFetchData } = useUpdateFetch(
+		"/proyectos",
+		"Proyecto",
+		reloadFetchData,
+		updateModal
+	);
+
+	// Logica para el modal del update y sus datos
+	const onUpdate = (data: any) => {
+		console.log(data);
+		setCurrentUpdateData(data);
+		updateModal.onVisibleModal();
+	};
 
 	return (
 		<>
 			<MainContentStructure titleText="Mantenimiento de proyectos">
 				<DataTable
 					columns={columns}
-					data={""}
+					data={data}
 					textAddButton="AGREGAR PROYECTO"
 					onAddModal={addModal.onVisibleModal}
+					onUpdate={onUpdate}
+					onDelete={deleteFetchData}
 				/>
 			</MainContentStructure>
 
@@ -26,7 +52,16 @@ export const Proyectos = () => {
 				modalStatus={addModal.modalStatus}
 				onHideModal={addModal.onHideModal}
 			>
-				<AddModal postFetchData={() => {}} />
+				<AddModal postFetchData={postFetchData} />
+			</PrimeModal>
+
+			{/* Update Modal */}
+			<PrimeModal
+				header="Editar proyecto"
+				modalStatus={updateModal.modalStatus}
+				onHideModal={updateModal.onHideModal}
+			>
+				<AddModal updateFetchData={updateFetchData} updateData={currentUpdateData} />
 			</PrimeModal>
 		</>
 	);
@@ -34,12 +69,11 @@ export const Proyectos = () => {
 
 const columns = [
 	{ nombre: "ID", campo: "id" },
-	{ nombre: "Nombre", campo: "name" },
-	{ nombre: "Subtítulo", campo: "phone" },
-	{ nombre: "Estado", campo: "department" },
-	{ nombre: "Precio", campo: "province" },
-	{ nombre: "Cantidad dormitorio", campo: "district" },
-	{ nombre: "Cantidad de baños", campo: "address" },
-    { nombre: "Área", campo: "address" },
+	{ nombre: "Nombre", campo: "nombre" },
+	{ nombre: "Subtítulo", campo: "subtitulo" },
+	// { nombre: "Estado", campo: "estado" },
+	{ nombre: "Precio", campo: "precio" },
+	{ nombre: "Cantidad dormitorio", campo: "cantidad_dormitorio" },
+	{ nombre: "Cantidad de baños", campo: "cantidad_banio" },
+	{ nombre: "Área", campo: "area" },
 ];
-

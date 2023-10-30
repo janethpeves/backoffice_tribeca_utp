@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./AddModal.module.css";
 
 import { handleChangeInput } from "@/helpers/handleTextBox";
 
 import { Button } from "primereact/button";
 import { TextBoxField } from "@/components/TextBoxField/TextBoxField";
-import { SelectField } from "@/components/SelectField/SelectField";
 
 interface PropsAddModal {
 	postFetchData?: any;
@@ -15,68 +14,85 @@ interface PropsAddModal {
 
 export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAddModal) => {
 	const [newData, setNewData] = useState<any>({
-		name: "",
-		phone: "",
-		department: "",
-		province: "",
-		district: "",
-		address: "",
+		nombre: "",
+		subtitulo: "",
+		estado: true,
+		descripcion: "",
+		precio: "",
+		cantidad_dormitorio: "",
+		cantidad_banio: "",
+		area: "",
 	});
 
 	const handleCreate = async () => {
-		console.log(newData);
+		postFetchData(newData);
 	};
+
+	const handleUpdate = async () => {
+		try {
+			if (updateData) {
+				await updateFetchData(updateData.id, newData);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	// Seteando el estado del input al data si existe el update
+	useEffect(() => {
+		if (updateData) {
+			setNewData(updateData);
+		}
+	}, [updateData]);
 
 	return (
 		<div className={style.column__container}>
 			<TextBoxField
 				textLabel="Nombre del proyecto"
-				value={newData.name || ""}
-				name="name"
+				value={newData.nombre || ""}
+				name="nombre"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 
 			<TextBoxField
 				textLabel="Subtítulo"
-				value={newData.phone || ""}
-				name="phone"
-				type="number"
+				value={newData.subtitulo || ""}
+				name="subtitulo"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 
-			<SelectField
-				textLabel="Estado"
-				value={newData.department || ""}
-				name="department"
+			<TextBoxField
+				textLabel="Descripción"
+				value={newData.descripcion || ""}
+				name="descripcion"
 				onChange={(e) => handleChangeInput(e, setNewData)}
-				placeholder="Seleccione un departamento"
-				options={[]}
 			/>
 			<TextBoxField
 				textLabel="Precio"
-				value={newData.phone || ""}
-				name="phone"
+				value={newData.precio || ""}
+				name="precio"
 				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 			<TextBoxField
 				textLabel="Cantidad dormitorio"
-				value={newData.phone || ""}
-				name="phone"
+				value={newData.cantidad_dormitorio || ""}
+				name="cantidad_dormitorio"
 				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 
 			<TextBoxField
 				textLabel="Cantidad de baños"
-				value={newData.address || ""}
-				name="address"
+				value={newData.cantidad_banio || ""}
+				name="cantidad_banio"
+				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
 			<TextBoxField
 				textLabel="Área"
-				value={newData.phone || ""}
-				name="phone"
+				value={newData.area || ""}
+				name="area"
 				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>
@@ -84,15 +100,15 @@ export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAd
 			{postFetchData && (
 				<div>
 					<Button className="p-button-sm p-button-info mr-2" onClick={handleCreate}>
-						AGREGAR SEDE
+						AGREGAR PROYECTO
 					</Button>
 				</div>
 			)}
 
 			{updateFetchData && (
 				<div>
-					<Button className="p-button-sm p-button-info mr-2" onClick={() => {}}>
-						EDITAR SEDE
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleUpdate}>
+						EDITAR PROYECTO
 					</Button>
 				</div>
 			)}

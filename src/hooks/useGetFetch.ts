@@ -3,7 +3,7 @@ import axios from "axios";
 import { url } from "@/connections/mainApi.js";
 
 type HookData<T> = {
-	data: T[];
+	data: T[] | any;
 	isLoading: boolean;
 	reloadFetchData: () => Promise<void>;
 };

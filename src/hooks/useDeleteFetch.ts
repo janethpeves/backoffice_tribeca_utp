@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { url } from "@/connections/mainApi.js";
+import { useAppDispatch } from "@/store/hooks";
+import { setToast } from "@/store/slices/toast";
 
 export const useDeleteFetch = (
 	endPoint: string,
-	toastRef: any,
-	addModal: any,
-	reloadFetchData: () => void,
-	sectionName: string
+	sectionName: string,
+	reloadFetchData?: () => void
 ) => {
+	const dispatch = useAppDispatch();
 	const [isLoadingDelete, setIsLoadingDelete] = useState(true);
 	const [errorDelete, setErrorDelete] = useState<any>(null);
 	const [successDelete, setSuccessDelete] = useState<boolean>(false);
@@ -20,21 +21,21 @@ export const useDeleteFetch = (
 	};
 
 	useEffect(() => {
-		if (toastRef) {
-			if (successDelete) {
-				toastRef.current?.show({
+		if (successDelete) {
+			dispatch(
+				setToast({
 					severity: "success",
 					summary: `${sectionName} Eliminado`,
 					detail: `${sectionName} ha sido eliminado exitosamente`,
-				});
-				setInitStateDelete(); //Seteo los errores y el succes a su estado inicial
+				})
+			);
+
+			setInitStateDelete(); //Seteo los errores y el succes a su estado inicial
+			if (reloadFetchData) {
 				reloadFetchData(); //Vuelvo hacer el llamado de la data
 			}
-			if (errorDelete) {
-				console.error(errorDelete);
-			}
 		}
-	}, [successDelete, errorDelete]);
+	}, [successDelete]);
 
 	const deleteFetchData = async (id: string) => {
 		try {

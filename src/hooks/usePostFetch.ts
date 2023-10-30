@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { url } from "@/connections/mainApi.js";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { setToast } from "@/store/slices/toast";
 
 interface PostDataResponse {
 	data: any;
@@ -8,11 +11,12 @@ interface PostDataResponse {
 
 export const usePostFetch = (
 	endPoint: string,
-	toastRef: any,
-	addModal: any,
-	reloadFetchData: () => void,
-	sectionName: string
+	sectionName: string,
+	reloadFetchData?: () => void,
+	addModal?: any
 ) => {
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const [isLoadingPost, setIsLoadingPost] = useState<boolean>(false);
 	const [errorPost, setErrorPost] = useState<any>(null);
 	const [successPost, setSuccessPost] = useState<boolean>(false);
@@ -24,28 +28,30 @@ export const usePostFetch = (
 	};
 
 	useEffect(() => {
-		if (toastRef) {
-			if (successPost) {
-				toastRef.current?.show({
+		if (successPost) {
+			dispatch(
+				setToast({
 					severity: "success",
 					summary: `${sectionName} Agregado`,
 					detail: `${sectionName} ha sido agregado exitosamente`,
-				});
+				})
+			);
+
+			if (addModal) {
 				addModal.onHideModal();
-				setInitStatePost(); //Seteo los errores y el succes a su estado inicial
+			}
+			setInitStatePost(); //Seteo los errores y el succes a su estado inicial
+			if (reloadFetchData) {
 				reloadFetchData(); //Vuelvo hacer el llamado de la data
 			}
-			if (errorPost) {
-				console.error(errorPost);
-			}
 		}
-	}, [successPost, errorPost]);
+	}, [successPost]);
 
-	const postFetchData = async (data: any, query?: string): Promise<any> => {
+	const postFetchData = async (data: any, query?: string, pathUrl?: string): Promise<any> => {
 		try {
 			setIsLoadingPost(true);
 
-			const token = localStorage.getItem("rt__grifosBackoffice"); // Obteniendo el token JWT del localStorage
+			const token = localStorage.getItem("rt__grifosBackoffice");
 			const headers = {
 				Authorization: `Bearer ${token}`,
 			};
@@ -61,7 +67,13 @@ export const usePostFetch = (
 			setIsLoadingPost(false);
 			setSuccessPost(true);
 
-			return resp.data.data; //es necesario?
+			if (pathUrl) {
+				setTimeout(() => {
+					navigate(pathUrl);
+				}, 500);
+			}
+
+			return resp.data.data;
 		} catch (error) {
 			setIsLoadingPost(false);
 			setErrorPost(error);

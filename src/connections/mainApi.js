@@ -1,6 +1,5 @@
-const serverBaseURL = "http://173.249.39.232:5893";
-const testBaseURL = "https://grifos2.onrender.com";
+const serverBaseURL = "http://localhost:8080";
 
-const urls = [serverBaseURL, testBaseURL];
+const urls = [serverBaseURL];
 
 export const url = urls[0];

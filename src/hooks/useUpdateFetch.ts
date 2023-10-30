@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "@/connections/mainApi.js";
+import { useAppDispatch } from "@/store/hooks";
+import { setToast } from "@/store/slices/toast";
 
 export const useUpdateFetch = (
 	endPoint: string,
-	toastRef: any,
-	addModal: any,
-	reloadFetchData: () => void,
-	sectionName: string
+	sectionName: string,
+	reloadFetchData?: () => void,
+	addModal?: any
 ) => {
+	const dispatch = useAppDispatch();
 	const [isLoadingUpdate, setIsLoadingUpdate] = useState<boolean>(false);
 	const [errorUpdate, setErrorUpdate] = useState<any>(null);
 	const [successUpdate, setSuccessUpdate] = useState<boolean>(false);
@@ -20,22 +22,24 @@ export const useUpdateFetch = (
 	};
 
 	useEffect(() => {
-		if (toastRef) {
-			if (successUpdate) {
-				toastRef.current?.show({
+		if (successUpdate) {
+			dispatch(
+				setToast({
 					severity: "success",
 					summary: `${sectionName} Actualizado`,
 					detail: `${sectionName} ha sido actualizado exitosamente`,
-				});
+				})
+			);
+
+			if (addModal) {
 				addModal.onHideModal();
-				setInitStateUpdate(); //Seteo los errores y el succes a su estado inicial
-				reloadFetchData(); //Vuelvo hacer el llamado de la data
 			}
-			if (errorUpdate) {
-				console.error(errorUpdate);
+			setInitStateUpdate();
+			if (reloadFetchData) {
+				reloadFetchData();
 			}
 		}
-	}, [successUpdate, errorUpdate]);
+	}, [successUpdate]);
 
 	const updateFetchData = async (id: string, data: any): Promise<any> => {
 		try {
