@@ -22,6 +22,7 @@ export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAd
 		cantidad_dormitorio: "",
 		cantidad_banio: "",
 		area: "",
+		pisos:"",
 	});
 
 	const handleCreate = async () => {
@@ -93,6 +94,13 @@ export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAd
 				textLabel="Área"
 				value={newData.area || ""}
 				name="area"
+				type="number"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+			<TextBoxField
+				textLabel="Pisos"
+				value={newData.pisos || ""}
+				name="pisos"
 				type="number"
 				onChange={(e) => handleChangeInput(e, setNewData)}
 			/>

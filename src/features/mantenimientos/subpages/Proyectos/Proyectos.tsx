@@ -71,9 +71,10 @@ const columns = [
 	{ nombre: "ID", campo: "id" },
 	{ nombre: "Nombre", campo: "nombre" },
 	{ nombre: "Subtítulo", campo: "subtitulo" },
-	// { nombre: "Estado", campo: "estado" },
+	{ nombre: "Estado", campo: "estado" },
 	{ nombre: "Precio", campo: "precio" },
 	{ nombre: "Cantidad dormitorio", campo: "cantidad_dormitorio" },
 	{ nombre: "Cantidad de baños", campo: "cantidad_banio" },
 	{ nombre: "Área", campo: "area" },
+	{ nombre: "Pisos", campo: "pisos" },
 ];

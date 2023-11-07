@@ -1,6 +1,6 @@
 export const appRoutesMantenimientos = [
 	{
-		path: "/usuarios",
+		path: "/dashboard",
 		sidebarProps: {
 			displayText: "Home",
 		},
@@ -12,7 +12,7 @@ export const appRoutesMantenimientos = [
 		},
 	},
 	{
-		path: "/negocios-aliados",
+		path: "/seguimiento-clientes",
 		sidebarProps: {
 			displayText: "Seguimiento de Clientes",
 		},
