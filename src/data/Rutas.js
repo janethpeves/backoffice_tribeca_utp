@@ -24,9 +24,9 @@ export const appRoutesMantenimientos = [
 		},
 	},
 	{
-		path: "/gestion-roles",
+		path: "/departamento",
 		sidebarProps: {
-			displayText: "Departamentos",
+			displayText: "Departamento",
 		},
 	},
 	{
