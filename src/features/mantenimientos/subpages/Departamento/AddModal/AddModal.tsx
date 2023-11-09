@@ -6,84 +6,118 @@ import { handleChangeInput } from "@/helpers/handleTextBox";
 import { Button } from "primereact/button";
 import { TextBoxField } from "@/components/TextBoxField/TextBoxField";
 import { useEffect } from "react";
+import { SelectField } from "@/components/SelectField/SelectField";
+import { useGetFetch } from "@/hooks/useGetFetch";
 
 interface PropsAddModal {
-  postFetchData?: any;
-  updateFetchData?: any;
-  updateData?: any;
+	postFetchData?: any;
+	updateFetchData?: any;
+	updateData?: any;
 }
 
-export const AddModal = ({
-  postFetchData,
-  updateFetchData,
-  updateData,
-}: PropsAddModal) => {
-  const [newData, setNewData] = useState<any>({
-    name: "",
-    address: "",
-    ruc: "",
-    phone1: "",
-    phone2: "",
-    parametro: "",
-  });
+export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAddModal) => {
+	let proyectoData = useGetFetch("/proyectos");
 
-  const handleCreate = async () => {
-    console.log(newData);
-  };
+	const [newData, setNewData] = useState<any>({
+		nombre: "",
+		area: "",
+		cantidad_dormitorio: "",
+		cantidad_banio: "",
+		proyecto: "",
+		obs: "",
+	});
 
-  return (
-    <div className={style.column__container}>
-      <TextBoxField
-        textLabel="Nombre"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
+	const handleSelectChange = (e: any) => {
+		setNewData((prev: any) => ({
+			...prev,
+			proyecto: e.target.value,
+		}));
+	};
 
-      <TextBoxField
-        textLabel="Área"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
+	const handleCreate = async () => {
+		const dataCreate = { ...newData, proyecto: newData.proyecto?.nombre };
+		postFetchData(dataCreate);
+	};
 
-      <TextBoxField
-        textLabel="Cantidad de dormitorio"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
-	  <TextBoxField
-        textLabel="Cantidad de baño"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
-	  <TextBoxField
-        textLabel="Piso"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
+	const handleUpdate = async () => {
+		try {
+			if (updateData) {
+				const dataUpdate = { ...newData, proyecto: newData.proyecto?.nombre };
+				await updateFetchData(updateData.id, dataUpdate);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-      {postFetchData && (
-        <div>
-          <Button
-            className="p-button-sm p-button-info mr-2"
-            onClick={handleCreate}
-          >
-            AGREGAR DEDPARTAMENTO
-          </Button>
-        </div>
-      )}
+	// Seteando el estado del input al data si existe el update
+	useEffect(() => {
+		if (updateData) {
+			setNewData(updateData);
+		}
+	}, [updateData]);
 
-      {updateFetchData && (
-        <div>
-          <Button className="p-button-sm p-button-info mr-2" onClick={() => {}}>
-            EDITAR DEPARTAMENTO
-          </Button>
-        </div>
-      )}
-    </div>
-  );
+	return (
+		<div className={style.column__container}>
+			<TextBoxField
+				textLabel="Nombre"
+				value={newData.nombre || ""}
+				name="nombre"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+
+			<TextBoxField
+				textLabel="Área"
+				value={newData.area || ""}
+				name="area"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+
+			<TextBoxField
+				textLabel="Cantidad de dormitorio"
+				value={newData.cantidad_dormitorio || ""}
+				name="cantidad_dormitorio"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+			<TextBoxField
+				textLabel="Cantidad de baño"
+				value={newData.cantidad_banio || ""}
+				name="cantidad_banio"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+
+			<SelectField
+				textLabel="Proyecto"
+				value={newData.proyecto}
+				name="proyecto"
+				placeholder="Elige un proyecto"
+				optionLabel="nombre"
+				onChange={handleSelectChange}
+				options={proyectoData.data}
+			/>
+
+			<TextBoxField
+				textLabel="Observación"
+				value={newData.obs || ""}
+				name="obs"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
+
+			{postFetchData && (
+				<div>
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleCreate}>
+						AGREGAR DEPARTAMENTO
+					</Button>
+				</div>
+			)}
+
+			{updateFetchData && (
+				<div>
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleUpdate}>
+						EDITAR DEPARTAMENTO
+					</Button>
+				</div>
+			)}
+		</div>
+	);
 };
