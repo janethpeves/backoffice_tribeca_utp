@@ -10,7 +10,7 @@ import { appRoutesMantenimientos } from "@/data/Rutas";
 // submenu
 import { Mantenimientos } from "../features/mantenimientos/pages/Mantenimientos";
 import { Usuarios } from "@/features/mantenimientos/subpages/Usuarios/Usuarios";
-import { SeguimientoClientes } from "@/features/mantenimientos/subpages/NegociosAliados/SeguimientoClientes";
+import { SeguimientoClientes } from "@/features/mantenimientos/subpages/SeguimientosClientes/SeguimientoClientes";
 import { Proyectos } from "@/features/mantenimientos/subpages/Proyectos/Proyectos";
 import { CategoriasProductos } from "@/features/mantenimientos/subpages/CategoriasProductos/CategoriasProducto";
 import { Promociones } from "@/features/mantenimientos/subpages/Promociones/Promociones";
