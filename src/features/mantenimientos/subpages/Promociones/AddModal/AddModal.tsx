@@ -7,6 +7,8 @@ import { Button } from "primereact/button";
 import { TextBoxField } from "@/components/TextBoxField/TextBoxField";
 import { useEffect } from "react";
 import { Calendar } from "primereact/calendar";
+import { SelectField } from "@/components/SelectField/SelectField";
+import { useGetFetch } from "@/hooks/useGetFetch";
 
 interface PropsAddModal {
   postFetchData?: any;
@@ -19,6 +21,9 @@ export const AddModal = ({
   updateFetchData,
   updateData,
 }: PropsAddModal) => {
+
+  let proyectoData = useGetFetch("/proyectos");
+
   const [newData, setNewData] = useState<any>({
     name: "",
     address: "",
@@ -28,12 +33,30 @@ export const AddModal = ({
     parametro: "",
   });
 
+  const handleSelectChange = (e: any) => {
+		setNewData((prev: any) => ({
+			...prev,
+			proyecto: e.target.value,
+		}));
+	};
+
   const handleCreate = async () => {
-    console.log(newData);
+    const dataCreate = { ...newData, proyecto: newData.proyecto?.nombre };
+		postFetchData(dataCreate);
   };
 
   return (
     <div className={style.column__container}>
+      <SelectField
+				textLabel="Proyecto"
+				value={newData.proyecto}
+				name="proyecto"
+				placeholder="Elige un proyecto"
+				optionLabel="nombre"
+				onChange={handleSelectChange}
+				options={proyectoData.data}
+			/>
+
       <TextBoxField
         textLabel="Nombre de la oferta"
         value={newData.name || ""}
