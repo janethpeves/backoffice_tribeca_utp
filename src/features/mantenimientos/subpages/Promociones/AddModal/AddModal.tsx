@@ -35,7 +35,7 @@ export const AddModal = ({
   return (
     <div className={style.column__container}>
       <TextBoxField
-        textLabel="Nombre de la promoción"
+        textLabel="Nombre de la oferta"
         value={newData.name || ""}
         name="name"
         onChange={(e) => handleChangeInput(e, setNewData)}

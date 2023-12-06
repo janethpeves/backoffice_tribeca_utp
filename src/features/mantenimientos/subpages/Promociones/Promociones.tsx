@@ -11,18 +11,18 @@ export const Promociones = () => {
 
 	return (
 		<>
-			<MainContentStructure titleText="Mantenimiento de promociones">
+			<MainContentStructure titleText="Mantenimiento de ofertas">
 				<DataTable
 					columns={columns}
 					data={""}
-					textAddButton="AGREGAR PROMOCIONES"
+					textAddButton="AGREGAR OFERTA"
 					onAddModal={addModal.onVisibleModal}
 				/>
 			</MainContentStructure>
 
 			{/* Add Modal */}
 			<PrimeModal
-				header="Agregar promoción"
+				header="Agregar oferta"
 				modalStatus={addModal.modalStatus}
 				onHideModal={addModal.onHideModal}
 			>
