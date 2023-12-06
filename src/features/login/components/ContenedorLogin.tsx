@@ -31,8 +31,7 @@ export let ContenedorLogin = () => {
 	});
 
 	const handleLogin = () => {
-		// dispatch(getUser(user));
-		navigate("/");
+		dispatch(getUser(user));
 	};
 
 	const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {

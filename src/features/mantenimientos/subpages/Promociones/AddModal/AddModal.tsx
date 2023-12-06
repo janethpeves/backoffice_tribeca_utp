@@ -11,43 +11,55 @@ import { SelectField } from "@/components/SelectField/SelectField";
 import { useGetFetch } from "@/hooks/useGetFetch";
 
 interface PropsAddModal {
-  postFetchData?: any;
-  updateFetchData?: any;
-  updateData?: any;
+	postFetchData?: any;
+	updateFetchData?: any;
+	updateData?: any;
 }
 
-export const AddModal = ({
-  postFetchData,
-  updateFetchData,
-  updateData,
-}: PropsAddModal) => {
+export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAddModal) => {
+	let proyectoData = useGetFetch("/proyectos");
 
-  let proyectoData = useGetFetch("/proyectos");
+	const [newData, setNewData] = useState<any>({
+		nombre: "",
+		precio_oferta: "",
+		fecha_inicio: "",
+		fecha_fin: "",
+		obs: "",
+		proyecto: "",
+	});
 
-  const [newData, setNewData] = useState<any>({
-    name: "",
-    address: "",
-    ruc: "",
-    phone1: "",
-    phone2: "",
-    parametro: "",
-  });
-
-  const handleSelectChange = (e: any) => {
+	const handleSelectChange = (e: any) => {
 		setNewData((prev: any) => ({
 			...prev,
 			proyecto: e.target.value,
 		}));
 	};
 
-  const handleCreate = async () => {
-    const dataCreate = { ...newData, proyecto: newData.proyecto?.nombre };
+	const handleCreate = async () => {
+		const dataCreate = { ...newData, proyecto: newData.proyecto?.nombre };
 		postFetchData(dataCreate);
-  };
+	};
 
-  return (
-    <div className={style.column__container}>
-      <SelectField
+	const handleUpdate = async () => {
+		try {
+			if (updateData) {
+				const dataUpdate = { ...newData, proyecto: newData.proyecto?.nombre };
+				await updateFetchData(updateData.id, dataUpdate);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	useEffect(() => {
+		if (updateData) {
+			setNewData(updateData);
+		}
+	}, [updateData]);
+
+	return (
+		<div className={style.column__container}>
+			<SelectField
 				textLabel="Proyecto"
 				value={newData.proyecto}
 				name="proyecto"
@@ -57,49 +69,62 @@ export const AddModal = ({
 				options={proyectoData.data}
 			/>
 
-      <TextBoxField
-        textLabel="Nombre de la oferta"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
+			<TextBoxField
+				textLabel="Nombre de la oferta"
+				value={newData.nombre || ""}
+				name="nombre"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
 
-      <TextBoxField
-        textLabel="Descuento"
-        value={newData.address || ""}
-        name="address"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-      />
+			<TextBoxField
+				textLabel="Precio de oferta"
+				value={newData.precio_oferta || ""}
+				name="precio_oferta"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
 
-      <div style={{ display: "flex", flexDirection:"column", gap: "5px" }}>
-        <label >Fecha de inicio</label>
-        <Calendar showIcon/>
-      </div>
+			<div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+				<label>Fecha de inicio</label>
+				<Calendar
+					showIcon
+					name="fecha_inicio"
+					value={newData.fecha_inicio}
+					onChange={(e: any) => handleChangeInput(e, setNewData)}
+				/>
+			</div>
 
-	  <div style={{ display: "flex", flexDirection:"column", gap: "5px" }}>
-        <label >Fecha de fin</label>
-        <Calendar showIcon/>
-      </div>
-    
+			<div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+				<label>Fecha de fin</label>
+				<Calendar
+					showIcon
+					name="fecha_fin"
+					value={newData.fecha_fin}
+					onChange={(e: any) => handleChangeInput(e, setNewData)}
+				/>
+			</div>
 
-      {postFetchData && (
-        <div>
-          <Button
-            className="p-button-sm p-button-info mr-2"
-            onClick={handleCreate}
-          >
-            AGREGAR PROMOCIÓN
-          </Button>
-        </div>
-      )}
+			<TextBoxField
+				textLabel="Observación"
+				value={newData.obs || ""}
+				name="obs"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+			/>
 
-      {updateFetchData && (
-        <div>
-          <Button className="p-button-sm p-button-info mr-2" onClick={() => {}}>
-            EDITAR PROMOCIÓN
-          </Button>
-        </div>
-      )}
-    </div>
-  );
+			{postFetchData && (
+				<div>
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleCreate}>
+						AGREGAR OFERTA
+					</Button>
+				</div>
+			)}
+
+			{updateFetchData && (
+				<div>
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleUpdate}>
+						EDITAR OFERTA
+					</Button>
+				</div>
+			)}
+		</div>
+	);
 };

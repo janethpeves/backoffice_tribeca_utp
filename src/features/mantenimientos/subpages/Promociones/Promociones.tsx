@@ -16,20 +16,10 @@ export const Promociones = () => {
 
 	const [currentUpdateData, setCurrentUpdateData] = useState<any>(null);
 
-	const { data, reloadFetchData } = useGetFetch<any>("/oferta");
-	const { postFetchData } = usePostFetch(
-		"/oferta",
-		"Oferta",
-		reloadFetchData,
-		addModal
-	);
-	const { deleteFetchData } = useDeleteFetch("/oferta", "Oferta", reloadFetchData);
-	const { updateFetchData } = useUpdateFetch(
-		"/oferta",
-		"Oferta",
-		reloadFetchData,
-		updateModal
-	);
+	const { data, reloadFetchData } = useGetFetch<any>("/ofertas");
+	const { postFetchData } = usePostFetch("/ofertas", "Oferta", reloadFetchData, addModal);
+	const { deleteFetchData } = useDeleteFetch("/ofertas", "Oferta", reloadFetchData);
+	const { updateFetchData } = useUpdateFetch("/ofertas", "Oferta", reloadFetchData, updateModal);
 
 	// Logica para el modal del update y sus datos
 	const onUpdate = (data: any) => {
@@ -72,10 +62,10 @@ export const Promociones = () => {
 };
 
 const columns = [
-	// { nombre: "ID", campo: "id" },
-	{ nombre: "Nombre", campo: "name" },
-	{ nombre: "Descuento", campo: "name" },
-	{ nombre: "Fecha inicio", campo: "address" },
-	{ nombre: "Fecha fin", campo: "address" },
-	
+	{ nombre: "Proyecto", campo: "proyecto" },
+	{ nombre: "Nombre", campo: "nombre" },
+	{ nombre: "Descuento", campo: "precio_oferta" },
+	{ nombre: "Fecha inicio", campo: "fecha_inicio" },
+	{ nombre: "Fecha fin", campo: "fecha_fin" },
+	{ nombre: "Observación", campo: "obs" },
 ];

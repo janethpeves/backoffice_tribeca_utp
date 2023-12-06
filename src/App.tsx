@@ -4,7 +4,7 @@ import { AppRoutes } from "./routes/AppRoutes";
 
 import { addLocale, locale } from "primereact/api";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
-import { refreshToken, isLoading } from "@/store/slices/auth";
+import { isLoading, refreshLogin } from "@/store/slices/auth";
 import { clearToast } from "./store/slices/toast";
 import { Toast } from "primereact/toast";
 
@@ -51,9 +51,9 @@ export const App = () => {
 	// refresh token
 	const dispatch = useAppDispatch();
 	useEffect(() => {
-		const tokenStorage = localStorage.getItem("rt__grifosBackoffice");
-		if (tokenStorage) {
-			dispatch(refreshToken(tokenStorage));
+		const loginStorage = localStorage.getItem("login__tribeca");
+		if (loginStorage) {
+			dispatch(refreshLogin());
 		} else {
 			dispatch(isLoading());
 		}

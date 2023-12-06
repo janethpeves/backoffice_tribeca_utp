@@ -5,23 +5,22 @@ import { useAppSelector } from "@/store/hooks";
 import { LoginPage } from "../features/login/pages/LoginPage";
 
 import { AppRoutesMantenimientos } from "./AppRoutesMantenimientos";
-import { HomePage } from "@/features/home/pages/HomePage";
 
 export function AppRoutes() {
 	const { login, isLoading } = useAppSelector((state) => state.auth);
 
-	// if (isLoading) {
-	// 	return <></>;
-	// }
+	if (isLoading) {
+		return <></>;
+	}
 
 	return (
 		<BrowserRouter>
-			<Routes>
+			{/* <Routes>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/*" element={<AppRoutesMantenimientos />} />
-			</Routes>
-			{/* <Routes>
-				{!!login ? (
+			</Routes> */}
+			<Routes>
+				{!login ? (
 					<>
 						<Route path="/login" element={<LoginPage />} />
 						<Route path="/*" element={<Navigate to="/login" />} />
@@ -35,7 +34,7 @@ export function AppRoutes() {
 						<Route path="/*" element={<Navigate to="/" />} />
 					</>
 				)}
-			</Routes> */}
+			</Routes>
 		</BrowserRouter>
 	);
 }

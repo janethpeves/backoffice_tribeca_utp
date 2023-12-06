@@ -10,131 +10,158 @@ import { SwitchField } from "@/components/SwitchField/SwitchField";
 import { SelectField } from "@/components/SelectField/SelectField";
 
 interface PropsAddModal {
-  postFetchData?: any;
-  updateFetchData?: any;
-  updateData?: any;
+	postFetchData?: any;
+	updateFetchData?: any;
+	updateData?: any;
 }
 
-export const AddModal = ({
-  postFetchData,
-  updateFetchData,
-  updateData,
-}: PropsAddModal) => {
-  const [newData, setNewData] = useState<any>({
-    name: "",
-    address: "",
-    dni: "",
-    phone: "",
-  });
+export const AddModal = ({ postFetchData, updateFetchData, updateData }: PropsAddModal) => {
+	const [newData, setNewData] = useState<any>({
+		nombre: "",
+		apellido_paterno: "",
+		apellido_materno: "",
+		email: "",
+		rol: "",
+		telefono: "",
+		estado: true,
+	});
 
-  const handleCreate = async () => {
-    // Estructurando la data para el envio del post
-    console.log(newData);
-  };
+	const handleSelectChange = (e: any) => {
+		setNewData((prev: any) => ({
+			...prev,
+			rol: e.target.value,
+		}));
+	};
 
-  const handleUpdate = async () => {
-    console.log(newData);
-  };
+	const handleStatusChange = (e: any) => {
+		setNewData((prev: any) => ({
+			...prev,
+			estado: !prev.estado,
+		}));
+	};
 
-  return (
-    <div className={style.column__container}>
-      <TextBoxField
-        textLabel="Nombre:"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-		direction="row"
-		labelWidth="120px"
-      />
+	const handleCreate = async () => {
+		const dataCreate = { ...newData, rol: newData.rol?.nombre };
+		postFetchData(dataCreate);
+	};
 
-      <TextBoxField
-        textLabel="Apellido Paterno:"
-        value={newData.name || ""}
-        name="name"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-		direction="row"
-		labelWidth="120px"
-      />
+	const handleUpdate = async () => {
+		try {
+			if (updateData) {
+				const dataUpdate = { ...newData, rol: newData.rol?.nombre };
+				await updateFetchData(updateData.id, dataUpdate);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-      <TextBoxField
-        textLabel="Apellido Materno:"
-        value={newData.dni || ""}
-        name="dni"
-        type="number"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-		direction="row"
-		labelWidth="120px"
-      />
+	useEffect(() => {
+		if (updateData) {
+			setNewData(updateData);
+		}
+	}, [updateData]);
 
-      <TextBoxField
-        textLabel="Correo:"
-        value={newData.address || ""}
-        name="address"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-		direction="row"
-		labelWidth="120px"
-      />
+	return (
+		<div className={style.column__container}>
+			<TextBoxField
+				textLabel="Nombre:"
+				value={newData.nombre || ""}
+				name="nombre"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+				direction="row"
+				labelWidth="120px"
+			/>
 
-      <TextBoxField
-        textLabel="Password:"
-        value={newData.address || ""}
-        name="address"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-		direction="row"
-		labelWidth="120px"
-      />
+			<TextBoxField
+				textLabel="Apellido Paterno:"
+				value={newData.apellido_paterno || ""}
+				name="apellido_paterno"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+				direction="row"
+				labelWidth="120px"
+			/>
 
-      <SelectField
-        textLabel="Rol:"
-        value={""}
-        name=""
-        placeholder="Seleccione un rol"
-        onChange={() => {}}
-        options={[]}
-		direction="row"
-		labelWidth="120px"
-      />
+			<TextBoxField
+				textLabel="Apellido Materno:"
+				value={newData.apellido_materno || ""}
+				name="apellido_materno"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+				direction="row"
+				labelWidth="120px"
+			/>
 
-      <TextBoxField
-        textLabel="Teléfono:"
-        value={newData.phone || ""}
-        name="phone1"
-        type="number"
-        onChange={(e) => handleChangeInput(e, setNewData)}
-		direction="row"
-		labelWidth="120px"
-      />
+			<TextBoxField
+				textLabel="Correo:"
+				value={newData.email || ""}
+				name="email"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+				type="email"
+				direction="row"
+				labelWidth="120px"
+			/>
 
-      <SwitchField
-        textLabel="Habilitar:"
-        value={false}
-        name="switch"
-        onChange={() => ""}
-		direction="row"
-		labelWidth="120px"
-      />
+			<TextBoxField
+				textLabel="Password:"
+				value={newData.password || ""}
+				name="password"
+				type="password"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+				direction="row"
+				labelWidth="120px"
+			/>
 
-      {postFetchData && (
-        <div>
-          <Button
-            className="p-button-sm p-button-info mr-2"
-            onClick={handleCreate}
-          >
-            AGREGAR USUARIO
-          </Button>
-        </div>
-      )}
+			<SelectField
+				textLabel="Rol:"
+				value={newData.rol}
+				name="rol"
+				placeholder="Seleccione un rol"
+				onChange={handleSelectChange}
+				options={Roles}
+				optionLabel="nombre"
+				direction="row"
+				labelWidth="120px"
+			/>
 
-      {updateFetchData && (
-        <div>
-          <Button
-            className="p-button-sm p-button-info mr-2"
-            onClick={handleUpdate}
-          >
-            EDITAR USUARIO
-          </Button>
-        </div>
-      )}
-    </div>
-  );
+			<TextBoxField
+				textLabel="Teléfono:"
+				value={newData.telefono || ""}
+				name="telefono"
+				type="number"
+				onChange={(e) => handleChangeInput(e, setNewData)}
+				direction="row"
+				labelWidth="120px"
+			/>
+
+			<SwitchField
+				textLabel="Habilitar:"
+				value={newData.estado}
+				name="estado"
+				onChange={handleStatusChange}
+				direction="row"
+				labelWidth="120px"
+			/>
+
+			{postFetchData && (
+				<div>
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleCreate}>
+						AGREGAR USUARIO
+					</Button>
+				</div>
+			)}
+
+			{updateFetchData && (
+				<div>
+					<Button className="p-button-sm p-button-info mr-2" onClick={handleUpdate}>
+						EDITAR USUARIO
+					</Button>
+				</div>
+			)}
+		</div>
+	);
 };
+
+const Roles = [
+	{ id: 1, nombre: "Superadmin" },
+	{ id: 2, nombre: "Admin" },
+];

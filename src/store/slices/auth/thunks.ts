@@ -5,8 +5,8 @@ import { isLoading, setLogin } from "./authSlice";
 export const getUser = (payload: string): AppThunk => {
 	return async (dispatch) => {
 		try {
-			const { data } = await authApi.post("/login-backoffice", payload);
-			localStorage.setItem("rt__grifosBackoffice", data.jwt);
+			const { data } = await authApi.post("/login", payload);
+			localStorage.setItem("login__tribeca", data);
 
 			dispatch(setLogin(data));
 		} catch (error) {
@@ -15,16 +15,14 @@ export const getUser = (payload: string): AppThunk => {
 	};
 };
 
-export const refreshToken = (payload: string): AppThunk => {
+export const refreshLogin = (): AppThunk => {
 	return async (dispatch) => {
 		try {
-			const { data } = await authApi.post(`/refresh-token`, { jwt: payload });
-			// -- Devolver todo el login cuando se haga refresh token.
-			localStorage.setItem("rt__grifosBackoffice", data.jwt);
-			dispatch(setLogin(data));
+			const loginStorage = localStorage.getItem("login__tribeca");
+			dispatch(setLogin(loginStorage));
 		} catch (error) {
 			console.log(error);
-			localStorage.removeItem("rt__grifosBackoffice");
+			localStorage.removeItem("login__tribeca");
 			dispatch(isLoading());
 		}
 	};
@@ -32,7 +30,7 @@ export const refreshToken = (payload: string): AppThunk => {
 
 export const logoutUser = (): AppThunk => {
 	return (dispatch) => {
-		localStorage.removeItem("rt__grifosBackoffice");
+		localStorage.removeItem("login__tribeca");
 		dispatch(setLogin(null));
 	};
 };
