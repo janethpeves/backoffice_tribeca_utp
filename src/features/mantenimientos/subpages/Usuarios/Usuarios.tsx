@@ -35,17 +35,16 @@ export const Usuarios = () => {
 const columns = [
 	// { nombre: "ID", campo: "id" },
 	{ nombre: "Nombre", campo: "name" },
-	{ nombre: "Apellido", campo: "name" },
+	{ nombre: "Apellido Paterno", campo: "name" },
+	{ nombre: "Apellido Materno", campo: "name" },
+	{ nombre: "Correo", campo: "email" },
+	{ nombre: "rol", campo: "address" },
 	{
 		nombre: "Teléfono",
 		body: (rowData: any) => {
 			return <>{rowData.phones[0]}</>;
 		},
 	},
-	{ nombre: "Correo", campo: "ruc" },
-	{ nombre: "Dirección", campo: "address" },
-	{ nombre: "Cargo", campo: "address" },
-	{ nombre: "Obs", campo: "address" },
 	{
 		nombre: "Habilitar",
 		body: (rowData: any) => {
