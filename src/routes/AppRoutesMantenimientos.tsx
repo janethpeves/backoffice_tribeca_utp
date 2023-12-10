@@ -20,6 +20,8 @@ import { Monedas } from "@/features/mantenimientos/subpages/Monedas/Monedas";
 import { HistorialUso } from "@/features/mantenimientos/subpages/HistorialUso/HistorialUso";
 import { Dashboard } from "@/features/mantenimientos/subpages/Dashboard/Dashboard";
 import { Departamento } from "@/features/mantenimientos/subpages/Departamento/Departamento";
+import { CitasAgendadas } from "@/features/mantenimientos/subpages/CitasAgendadas/CitasAgendadas";
+import { ClientesArchivados } from "@/features/mantenimientos/subpages/ClientesArchivados/ClientesArchivados";
 
 export const AppRoutesMantenimientos = () => {
 	return (
@@ -29,10 +31,12 @@ export const AppRoutesMantenimientos = () => {
 				<Sidebar appRoutes={appRoutesMantenimientos} />
 
 				<Routes>
-					{/* <Route path="/" element={<Mantenimientos />} /> */}
-					<Route path="/" element={<Dashboard />} />
+					<Route path="/" element={<Navigate to="/dashboard" />} />
+					<Route path="/dashboard" element={<Dashboard />} />
 					<Route path="/usuarios" element={<Usuarios />} />
 					<Route path="/seguimiento-clientes" element={<SeguimientoClientes />} />
+					<Route path="/citas" element={<CitasAgendadas />} />
+					<Route path="/clientes-archivados" element={<ClientesArchivados />} />
 					<Route path="/proyectos" element={<Proyectos />} />
 					<Route path="/departamento" element={<Departamento />} />
 					<Route path="/categorias-productos" element={<CategoriasProductos />} />

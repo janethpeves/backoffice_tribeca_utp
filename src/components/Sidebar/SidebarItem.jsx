@@ -1,26 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ListItemButton } from "@mui/material";
 
-import { AiFillCaretRight } from "react-icons/ai";
-
 const SidebarItem = ({ item }) => {
+	const location = useLocation();
+	const isActive = item.path === location.pathname;
+
 	return item.sidebarProps && item.path ? (
 		<ListItemButton
 			component={Link}
 			to={item.path}
-			style={{ display: "flex", justifyContent: "space-between" }}
+			style={{
+				display: "flex",
+				justifyContent: "space-between",
+				borderRadius: "5px",
+			}}
 			sx={{
-				"&: hover": {
+				"&:hover": {
 					backgroundColor: "#0e141f",
 				},
-				backgroundColor: true === item.state ? "#232c3d" : "unset",
-				paddingY: "10px",
-				paddingX: "20px",
+				backgroundColor: isActive ? "#0e141f" : "unset",
 			}}
 		>
-			{item.sidebarProps.displayText}
-
-			{item.hasChildren ? <AiFillCaretRight /> : null}
+			<div style={{ paddingLeft: "20px" }}>{item.sidebarProps.displayText}</div>
 		</ListItemButton>
 	) : null;
 };

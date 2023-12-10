@@ -4,11 +4,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 
-import "primeicons/primeicons.css";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.css";
-
-export const PrimeDataTable = ({ columns, data, isActionVerify, onUpdate, onDelete }) => {
+export const PrimeDataTable = ({ columns, data, onUpdate, onDelete, onEye }) => {
 	const [dataTable, setDataTable] = useState(data);
 
 	useEffect(() => {
@@ -26,19 +22,35 @@ export const PrimeDataTable = ({ columns, data, isActionVerify, onUpdate, onDele
 			/>
 		);
 	};
+
 	const buttonDecline = (rowData) => {
 		return (
 			<Button
 				className="p-button-danger p-button-rounded"
 				style={{ width: "40px", height: "40px" }}
 				type="button"
-				icon="pi pi-trash"
+				icon="pi pi-ban"
 				onClick={() => {
 					onDelete(rowData.id);
 				}}
 			/>
 		);
 	};
+
+	const buttonEye = (rowData) => {
+		return (
+			<Button
+				className="p-button-help p-button-rounded"
+				style={{ width: "40px", height: "40px" }}
+				type="button"
+				icon="pi pi-eye"
+				onClick={() => {
+					onEye(rowData);
+				}}
+			/>
+		);
+	};
+
 	return (
 		<>
 			<DataTable
@@ -46,7 +58,6 @@ export const PrimeDataTable = ({ columns, data, isActionVerify, onUpdate, onDele
 				paginator
 				rows={5}
 				dataKey="id"
-				responsiveLayout="scroll"
 				emptyMessage="No se han encontrado resultados."
 			>
 				{columns &&
@@ -64,8 +75,9 @@ export const PrimeDataTable = ({ columns, data, isActionVerify, onUpdate, onDele
 					))}
 
 				{/* Botones para verificar transacciones */}
-				{isActionVerify && <Column style={{ width: "5rem" }} body={buttonSuccess} />}
-				{isActionVerify && <Column style={{ width: "5rem" }} body={buttonDecline} />}
+				{onUpdate && <Column style={{ width: "5rem" }} body={buttonSuccess} />}
+				{onEye && <Column style={{ width: "5rem" }} body={buttonEye} />}
+				{onDelete && <Column style={{ width: "5rem" }} body={buttonDecline} />}
 			</DataTable>
 		</>
 	);

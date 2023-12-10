@@ -1,15 +1,13 @@
 .container__drawer {
-	width: 320px;
-	min-width: 320px;
+	width: 280px;
+	min-width: 280px;
 	height: calc(100vh - 80px);
-	/* min-height: calc(100vh - 80px); */
 
 	background-color: #232c3d;
 
 	color: #fff;
 	box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.2);
 	padding: 20px;
-	/* padding-top: 20px; */
 
 	position: sticky;
 	top: 80px;
@@ -45,4 +43,18 @@
 
 .container__drawer::-webkit-scrollbar-track {
 	border-radius: 10px;
+}
+
+/* Nuevos estilos */
+.group {
+	font-weight: bold;
+	padding: 10px 20px;
+}
+
+/* Estilo para la línea divisoria */
+.whiteDivider {
+	border-top: 1px solid #726e6e; /* Cambia el color del borde a blanco (#fff) */
+	margin: 0 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }

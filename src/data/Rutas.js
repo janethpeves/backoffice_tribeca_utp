@@ -1,44 +1,76 @@
 export const appRoutesMantenimientos = [
 	{
-		path: "/dashboard",
-		sidebarProps: {
-			displayText: "Home",
-		},
+		group: true,
+		groupName: "Dashboard",
+		routes: [
+			{
+				path: "/dashboard",
+				sidebarProps: {
+					displayText: "Dashboard",
+				},
+			},
+		],
 	},
+
 	{
-		path: "/usuarios",
-		sidebarProps: {
-			displayText: "Usuarios",
-		},
+		group: true,
+		groupName: "Usuarios",
+		routes: [
+			{
+				path: "/usuarios",
+				sidebarProps: {
+					displayText: "Usuarios",
+				},
+			},
+		],
 	},
+
 	{
-		path: "/seguimiento-clientes",
-		sidebarProps: {
-			displayText: "Seguimiento de Clientes",
-		},
+		group: true,
+		groupName: "Clientes",
+		routes: [
+			{
+				path: "/seguimiento-clientes",
+				sidebarProps: {
+					displayText: "Seguimiento de clientes",
+				},
+			},
+			{
+				path: "/citas",
+				sidebarProps: {
+					displayText: "Citas agendadas",
+				},
+			},{
+				path: "/clientes-archivados",
+				sidebarProps: {
+					displayText: "Clientes archivados",
+				},
+			},
+		],
 	},
+
 	{
-		path: "/proyectos",
-		sidebarProps: {
-			displayText: "Proyectos",
-		},
+		group: true,
+		groupName: "Inmobiliaria",
+		routes: [
+			{
+				path: "/proyectos",
+				sidebarProps: {
+					displayText: "Proyectos",
+				},
+			},
+			{
+				path: "/departamento",
+				sidebarProps: {
+					displayText: "Departamentos",
+				},
+			},
+			{
+				path: "/promociones",
+				sidebarProps: {
+					displayText: "Ofertas",
+				},
+			},
+		],
 	},
-	{
-		path: "/departamento",
-		sidebarProps: {
-			displayText: "Departamento",
-		},
-	},
-	{
-		path: "/promociones",
-		sidebarProps: {
-			displayText: "Ofertas",
-		},
-	},
-	{
-		path: "/reportes",
-		sidebarProps: {
-			displayText: "Reportes",
-		},
-	}
 ];

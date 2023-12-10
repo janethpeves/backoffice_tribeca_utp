@@ -23,7 +23,6 @@ export const Usuarios = () => {
 
 	// Logica para el modal del update y sus datos
 	const onUpdate = (data: any) => {
-		console.log(data);
 		setCurrentUpdateData(data);
 		updateModal.onVisibleModal();
 	};
@@ -49,6 +48,7 @@ export const Usuarios = () => {
 			>
 				<AddModal postFetchData={postFetchData} />
 			</PrimeModal>
+
 			{/* Update Modal */}
 			<PrimeModal
 				header="Editar usuario"
@@ -68,5 +68,5 @@ const columns = [
 	{ nombre: "Correo", campo: "email" },
 	{ nombre: "Rol", campo: "rol" },
 	{ nombre: "Teléfono", campo: "telefono" },
-	{ nombre: "Estado", campo: "estado" },
+	{ nombre: "Activo", campo: "estado" },
 ];

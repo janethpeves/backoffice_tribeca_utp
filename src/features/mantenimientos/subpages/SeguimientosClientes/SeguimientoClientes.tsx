@@ -1,48 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModal } from "@/hooks/useModal";
 
 import { PrimeModal } from "@/primeComponents/PrimeModal/PrimeModal";
 import { AddModal } from "./AddModal/AddModal";
 import { DataTable } from "@/components/DataTable/DataTable";
 import { MainContentStructure } from "@/components/MainContentStructure/MainContentStructure";
-import { HeaderDataTable } from "@/components/HeaderDataTable/HeaderDataTable";
-import { SectionStructure } from "@/components/SectionStructure/SectionStructure";
 import { useGetFetch } from "@/hooks/useGetFetch";
+
+import { useUpdateFetch } from "@/hooks/useUpdateFetch";
 
 export const SeguimientoClientes = () => {
 	const addModal = useModal();
 
-	const { data, reloadFetchData } = useGetFetch<any>("/leads");
+	const [currentUpdateData, setCurrentUpdateData] = useState<any>(null);
+
+	const { data, reloadFetchData } = useGetFetch<any>("/leads?proceso=Nuevo");
+	const { updateFetchData } = useUpdateFetch("/leads", "Lead", reloadFetchData, addModal);
+
+	// Logica para el modal del update y sus datos
+
+	const onUpdate = (data: any) => {
+		setCurrentUpdateData(data);
+		addModal.onVisibleModal();
+	};
 
 	return (
 		<>
 			<MainContentStructure titleText="Seguimiento de Clientes">
-				<SectionStructure>
-					<HeaderDataTable isExport isSearch />
-
-					<DataTable
-						columns={columns}
-						data={data}
-						onAddModal={addModal.onVisibleModal}
-						isActionVerify={false}
-					/>
-				</SectionStructure>
+				<DataTable columns={columns} data={data} onEye={onUpdate} isExport={true} isSearch={true} />
 			</MainContentStructure>
 
 			{/* Add Modal */}
 			<PrimeModal
-				header="Agregar negocio aliado"
+				header="Procesar lead"
 				modalStatus={addModal.modalStatus}
 				onHideModal={addModal.onHideModal}
 			>
-				<AddModal postFetchData={() => {}} />
+				<AddModal updateFetchData={updateFetchData} updateData={currentUpdateData} />
 			</PrimeModal>
 		</>
 	);
 };
 
 const columns = [
-	// { nombre: "ID", campo: "id" },
 	{ nombre: "Distrito", campo: "distrito" },
 	{ nombre: "Proyecto", campo: "proyecto" },
 	{ nombre: "Primer nombre", campo: "primer_nombre" },
@@ -51,5 +51,5 @@ const columns = [
 	{ nombre: "Teléfono", campo: "telefono" },
 	{ nombre: "Mensaje", campo: "mensaje" },
 	{ nombre: "Fecha de Registro", campo: "fecha_registro" },
-	{ nombre: "Obs", campo: "obs" },
+	{ nombre: "Proceso", campo: "proceso" },
 ];

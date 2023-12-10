@@ -34,7 +34,7 @@ export const MainHeader = ({ title = "", actionButton = false }) => {
 			<Toast ref={toast} />
 			<div style={{ display: "flex", alignItems: "center", gap: "100px" }}>
 				<div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-					<p className={style.mainHeader__title}>BACKOFFICE</p>
+					<p className={style.mainHeader__title}>TRIBECA BACKOFFICE</p>
 					{/* <p className={style.mainHeader__title}>{title}</p> */}
 				</div>
 			</div>
@@ -47,9 +47,6 @@ export const MainHeader = ({ title = "", actionButton = false }) => {
 					{menuActive && (
 						<div className={style.profileMenu}>
 							<ul className={style.profileMenu__list}>
-								<li className={style.profileMenu__item} onClick={() => handleNavigate("/")}>
-									<IoPersonOutline size={20} /> Mis Datos
-								</li>
 								<li className={style.profileMenu__item} onClick={handleLogout}>
 									<IoLogOutOutline size={20} /> Cerrar Sesión
 								</li>
