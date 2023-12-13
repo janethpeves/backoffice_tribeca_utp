@@ -8,14 +8,14 @@ import { InputText } from "primereact/inputtext";
 interface HeaderDataTableProps {
 	textAddButton?: string;
 	onAddModal?: () => void;
-	isExport?: boolean;
+	onExport?: any;
 	isSearch?: boolean;
 }
 
 export const HeaderDataTable = ({
 	textAddButton,
 	onAddModal,
-	isExport,
+	onExport,
 	isSearch,
 }: HeaderDataTableProps) => {
 	return (
@@ -32,11 +32,12 @@ export const HeaderDataTable = ({
 						/>
 					) : null}
 
-					{isExport ? (
+					{onExport ? (
 						<Button
 							label="EXPORTAR EXCEL"
 							icon="pi pi-file-excel"
 							className="p-button-sm p-button-success mr-2"
+							onClick={onExport}
 						/>
 					) : null}
 				</div>

@@ -49,15 +49,15 @@ export function Dashboard() {
 			<div className={style.dashboard__container}>
 				<div className={style.item}>
 					<p className={style.item__title}>Número de leads</p>
-					<p className={style.item__text}>120</p>
+					<p className={style.item__text}>17</p>
 				</div>
 				<div className={style.item}>
 					<p className={style.item__title}>Leads sin procesar</p>
-					<p className={style.item__text}>10</p>
+					<p className={style.item__text}>2</p>
 				</div>
 				<div className={style.item}>
 					<p className={style.item__title}>Citas agendadas</p>
-					<p className={style.item__text}>3</p>
+					<p className={style.item__text}>15</p>
 				</div>
 			</div>
 			<br />

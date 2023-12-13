@@ -4,8 +4,11 @@ import { DataTable } from "@/components/DataTable/DataTable";
 import { MainContentStructure } from "@/components/MainContentStructure/MainContentStructure";
 import { useGetFetch } from "@/hooks/useGetFetch";
 import { useUpdateFetch } from "@/hooks/useUpdateFetch";
+import { useExcelExport } from "@/hooks/useExcelExport";
 
 export const CitasAgendadas = () => {
+	const { exportToExcel } = useExcelExport();
+
 	const { data, reloadFetchData } = useGetFetch<any>("/leads?procesosExcluir=Nuevo,Archivado");
 	const [currentUpdateData, setCurrentUpdateData] = useState<any>(null);
 
@@ -37,7 +40,7 @@ export const CitasAgendadas = () => {
 	return (
 		<>
 			<MainContentStructure titleText="Seguimiento de Citas">
-				<DataTable columns={columns} data={data} isExport={true} isSearch={true} onEye={onUpdate} />
+				<DataTable columns={columns} data={data} onExport={() => exportToExcel(data)} isSearch={true} onEye={onUpdate} />
 			</MainContentStructure>
 		</>
 	);

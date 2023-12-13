@@ -13,7 +13,7 @@ interface DataTableProps {
 	onUpdate?: any;
 	onDelete?: any;
 	onEye?: any;
-	isExport?: boolean;
+	onExport?: any;
 	isSearch?: boolean;
 	children?: React.ReactNode;
 }
@@ -27,7 +27,7 @@ export const DataTable = ({
 	onUpdate,
 	onDelete,
 	onEye,
-	isExport,
+	onExport,
 	isSearch,
 	children,
 }: DataTableProps) => {
@@ -35,7 +35,7 @@ export const DataTable = ({
 		<SectionStructure>
 			{isHeaderActive ? (
 				<HeaderDataTable
-					isExport={isExport}
+					onExport={onExport}
 					isSearch={isSearch}
 					textAddButton={textAddButton ? textAddButton : null}
 					onAddModal={onAddModal}

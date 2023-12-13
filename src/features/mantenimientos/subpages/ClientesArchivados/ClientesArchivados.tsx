@@ -3,14 +3,21 @@ import React from "react";
 import { DataTable } from "@/components/DataTable/DataTable";
 import { MainContentStructure } from "@/components/MainContentStructure/MainContentStructure";
 import { useGetFetch } from "@/hooks/useGetFetch";
+import { useExcelExport } from "@/hooks/useExcelExport";
 
 export const ClientesArchivados = () => {
+	const { exportToExcel } = useExcelExport();
 	const { data, reloadFetchData } = useGetFetch<any>("/leads?proceso=Archivado");
 
 	return (
 		<>
 			<MainContentStructure titleText="Clientes Archivados">
-				<DataTable columns={columns} data={data} isExport={true} isSearch={true} />
+				<DataTable
+					columns={columns}
+					data={data}
+					onExport={() => exportToExcel(data)}
+					isSearch={true}
+				/>
 			</MainContentStructure>
 		</>
 	);

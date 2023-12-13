@@ -8,9 +8,11 @@ import { MainContentStructure } from "@/components/MainContentStructure/MainCont
 import { useGetFetch } from "@/hooks/useGetFetch";
 
 import { useUpdateFetch } from "@/hooks/useUpdateFetch";
+import { useExcelExport } from "@/hooks/useExcelExport";
 
 export const SeguimientoClientes = () => {
 	const addModal = useModal();
+	const { exportToExcel } = useExcelExport();
 
 	const [currentUpdateData, setCurrentUpdateData] = useState<any>(null);
 
@@ -27,7 +29,13 @@ export const SeguimientoClientes = () => {
 	return (
 		<>
 			<MainContentStructure titleText="Seguimiento de Clientes">
-				<DataTable columns={columns} data={data} onEye={onUpdate} isExport={true} isSearch={true} />
+				<DataTable
+					columns={columns}
+					data={data}
+					onEye={onUpdate}
+					onExport={() => exportToExcel(data)}
+					isSearch={true}
+				/>
 			</MainContentStructure>
 
 			{/* Add Modal */}
